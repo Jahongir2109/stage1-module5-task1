@@ -1,5 +1,6 @@
 package com.epam.mjc;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -11,15 +12,38 @@ import java.util.function.Supplier;
 public class InterfaceCreator {
 
     public Predicate<List<String>> isValuesStartWithUpperCase() {
-        throw new UnsupportedOperationException("You should implement this method.");
+        return strings -> {
+            for (int i = 0; i < strings.size(); i++) {
+                if (!Character.isUpperCase(strings.get(i).toCharArray()[0])) {
+                    return false;
+                }
+            };
+            return true;
+        };
     }
 
     public Consumer<List<Integer>> addEvenValuesAtTheEnd() {
-        throw new UnsupportedOperationException("You should implement this method.");
+        return integers -> {
+            int length=integers.size();
+            for (int i = 0; i < length; i++) {
+                if(integers.get(i)%2==0){
+                    integers.add(integers.get(i));
+                }
+            }
+        };
     }
 
     public Supplier<List<String>> filterCollection(List<String> values) {
-        throw new UnsupportedOperationException("You should implement this method.");
+        List<String>strings=new ArrayList<>();
+       Supplier<List<String>>supplier = () -> {
+           return strings;
+       };
+        for (String value : values) {
+            if (Character.isUpperCase(value.charAt(0)) && value.length()>=3 && value.charAt(value.length()-1)=='.'){
+               supplier.get().add(value);
+            }
+        }
+       return supplier;
     }
 
     public Function<List<String>, Map<String, Integer>> stringSize() {
